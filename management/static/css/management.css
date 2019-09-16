@@ -1,0 +1,212 @@
+/*初始化*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,
+abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,
+sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form, label,legend,caption,
+tfoot,th,article,aside,canvas,details,figcaption,
+figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    outline-style:none;/*FF*/
+}
+
+#body{
+    font-family: 'microsoft yahei','simsun';
+    width: 1400px;
+    margin: auto;
+    font-size: 20px;
+}
+/*左右样式自动计算内间距*/
+#title1{
+    text-align: center;
+    margin: auto;
+    font-size: 45px;
+    font-weight:bold;
+    border-bottom: 1px solid blue;
+}
+/*设置body中的title图片尺寸*/
+.title_img1{
+    width: 150px;
+}
+
+/*设置第一行功能布局*/
+#left1,#login{
+    width: 700px;
+    /*左右样式自动计算内间距*/
+    box-sizing: border-box;
+    float: left;
+    overflow: hidden;
+    height: 600px;
+}
+
+/*友情链接样式*/
+#end{
+    width: 1400px;
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+}
+/*友情链接a样式*/
+#end a{
+    text-decoration: none;
+}
+
+/*设置提示样式*/
+.c_span1{
+    font-size: 12px;
+    color: red;
+    float: left;
+    position: relative;
+    top:37px;
+    left: 10px;
+    overflow: hidden;
+}
+
+#jump{
+    text-align: center;
+    margin-top: 50px;
+}
+
+#mt1{
+    margin-top: 20px;
+    width: 1400px;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#mt1 span{
+    float: left;
+    margin-left: 30px;
+}
+
+#quit{
+    margin-left: 800px;
+    height: 30px;
+    text-decoration: none;
+}
+
+#examination{
+    width: 500px;
+    box-sizing: border-box;
+    margin-left: 100px;
+}
+
+#examination a{
+    text-decoration: none;
+}
+#ul_1 li{
+    margin-top: 15px;
+}
+/*反回主页界面链接*/
+#back{
+    margin-left: 100px;
+    height: 30px;
+    text-decoration: none;
+}
+/*退出主页界面链接*/
+/*#quit{*/
+    /*margin-left: 1000px;*/
+    /*height: 30px;*/
+    /*text-decoration: none;*/
+/*}*/
+#quit_1{
+    margin-left: 500px;
+    height: 30px;
+    text-decoration: none;
+}
+/*倒计时*/
+#mt1 #time_1{
+    margin-left: 160px;
+    height: 30px;
+    color: red;
+}
+/*入职考试标签*/
+#mt1 #rzaqks_title2{
+    margin-left: 147px;
+    color: blue;
+    font-size: 36px;
+}
+#rzaqks_from_1{
+    margin-left: 70px;
+}
+#rzaqks_from_1 p{
+    margin-top: 20px;
+}
+#rzaqks_from_1 div{
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+#rzaqks_from_1 input{
+    margin-bottom: 10px;
+}
+#mt1 #score_1{
+    margin-left: 55px;
+}
+#mt1 #score_2{
+    margin-left: 20px;
+    line-height: 33px;
+    color: red;
+    text-decoration: underline;
+}
+#mt1 #score_3{
+
+}
+
+#table1{
+    text-align: center;
+    font-size: 15px;
+    word-break:break-all;
+}
+#table1 select,input,button{
+    margin-left: 4px;
+    margin-right: 4px;
+}
+#table1_1,#table2_1,.table2_1{
+    width: 78px;
+}
+
+#table2_7,.table2_7{
+    width: 38px;
+}
+#table2_8,.table2_8{
+    width: 51px;
+}
+#table2_2,#table2_3,#table2_4,#table2_5,#table2_6{
+    width: 245px;
+}
+#style1_1_1{
+    height: 300px;
+    overflow: auto;
+    width: 1415px;
+}
+.table2_2,.table2_3,.table2_4,.table2_5,.table2_6{
+    width: 245px;
+
+}
+#table1_2,#table1_3,#table1_4,#table1_5,#table1_6{
+    width: 130px;
+}
+.table3_1{
+    width: 1040px;
+}
+.table3_2{
+    width: 1223px;
+}
+.table3_3{
+    width: 1223px;
+}
+.table4_1{
+    width: 630px;
+}
+#score_4{
+    top: 20px;
+}
+
+.textarea{
+    width: 200px;
+}

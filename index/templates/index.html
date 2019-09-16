@@ -1,0 +1,73 @@
+{% load static %}
+<!doctype html>
+<html lang='zh-cmn-Hans'>
+    <head>
+{#    禁用缓存加载#}
+        <meta name="author" content="chengmo">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" CONTENT="no-cache">
+{#        <meta http-equiv="expires" content="0">#}
+        <meta charset='UTF-8'>
+        <title>
+            {% block title %}
+            博达OA系统
+            {% endblock %}
+        </title>
+        <script src='{% static 'jquery/jquery-1.11.3.js' %}'></script>
+        {% block register1 %}
+            <script src="{% static 'javascript/index.js' %}"></script>
+        {% endblock %}
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    </head>
+    <body id = 'body'>
+        <div>
+            <!--body中的title-->
+            <div id = 'title1'>
+                <img src='{% static 'images/logo_1.png' %}' class='title_img1'>
+                博达OA系统1.0
+                <img src='{% static 'images/logo_2.png' %}' class='title_img1'>
+            </div>
+            <!--第一行左侧功能区-->
+            <div id='left1'>
+                <img src='{% static 'images/index1.png' %}' id="left1_1">
+            </div>
+            <!--第一行右侧功能区-->
+            <div id="login">
+                <p id="login_1">
+                    {% block login1 %}
+                    博达用户登录
+                    {% endblock %}
+                </p>
+                {% block login2 %}
+                    <form id="form_1" method="post" action=''>
+                        {% csrf_token %}
+                        <div>
+                            <p>手机号:</p>
+                            <input type="text" id="input1" placeholder="请输手机号" name="uphone">
+                            <span id="id_span1" class="c_span1"></span>
+                        </div>
+                        <div>
+                            <p>密&nbsp&nbsp&nbsp&nbsp码:</p>
+                            <input type="password" name="upassword">
+                            <span id="id_span2" class="c_span1"></span>
+                        </div>
+                        <span>{{ errMsg }}</span>
+                        <div>
+                            <button>登录</button>
+                            <a href="{% url 'register' %}" class="index_a1">注册</a>
+                        </div>
+                    </form>
+                    <a href="https://exmail.qq.com/login" style="margin-left: 0;font-size:18px;background:green" class="index_a1">
+                        企业邮箱
+                    </a>
+                {% endblock %}
+            </div>
+        </div>
+        <div id="end">
+            友情链接:
+            <a href="http://www.cgfse.com">成都晨光博达橡塑有限公司</a>
+            <a href="http://www.aifsil.com">成都博达爱福科技有限公司</a>
+            <h4>&copy版权归成都晨光博达橡塑有限公司所有</h4>
+        </div>
+    </body>
+</html>

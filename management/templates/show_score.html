@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang='zh-cmn-Hans'>
+    <head>
+{#    禁用缓存加载#}
+        <meta name="author" content="chengmo">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" CONTENT="no-cache">
+{#        <meta http-equiv="expires" content="0">#}
+        <meta charset='UTF-8'>
+        <title>
+            博达OA系统
+        </title>
+        <script src='{% static 'jquery/jquery-1.11.3.js' %}'></script>
+        <link rel="stylesheet" href="{% static 'css/management.css' %}">
+        <link rel="stylesheet" href="{% static 'css/show_score.css' %}">
+        <script src="{% static 'javascript/show_score.js' %}" ></script>
+    </head>
+    <body id = 'body'>
+        <!--body中的title-->
+        <div id = 'title1'>
+            <img src='{% static 'images/logo_1.png' %}' class='title_img1'>
+            博达OA系统1.0
+            <img src='{% static 'images/logo_2.png' %}' class='title_img1'>
+        </div>
+        <div id="mt1">
+            <div>
+                <span>{{ ucompany }}:{{ udepartment1 }}
+                    <br>
+                    {{ udepartment2 }}:{{ upost }}:{{ uname }}
+                </span>
+            </div>
+            <a id="back" href="{% url 'back' %}">返回主页</a>
+            <a id="quit_1" href="{% url 'quit' %}">注销登录</a>
+        </div>
+        <form action="">
+            <div id="show_score_1">
+                <div id="show_score_head_1">题型选择
+                    <select id="show_score_head_input"></select>
+                </div>
+                <div id="show_score_head_2">查询姓名
+                    <input type="radio" value="u_name" name="select">
+                    <input type="text" id="show_score_input_1">
+                </div>
+                <div id="show_score_head_3">账号
+                    <input type="radio" value="u_phone" name="select">
+                    <input type="text" id="show_score_input_2">
+                </div>
+                <div id="show_score_head_4">
+                    <button type="button" onclick="show_score_input_3()">确认</button>
+                    <button type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+        <form action="">
+            <div id="show_windows_3">
+                <table border="1" cellpadding="0" cellspacing="0" class="show_score_table">
+                    <tfoot></tfoot>
+                    <tbody>
+                        <tr>
+                            <td id="show_updata_score_1">账号</td>
+                            <td id="show_updata_score_2">试题种类</td>
+                            <td id="show_updata_score_3">第一次成绩</td>
+                            <td id="show_updata_score_4">第二次成绩</td>
+                            <td id="show_updata_score_5">第三次成绩</td>
+                            <td rowspan="2">
+                                <button type="button" onclick="mysubmission()">确认修改</button>
+                                <button type="reset">重置</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="select_phone_1"></td>
+                            <td id="select_phone_2"></td>
+                            <td>
+                                <input type="radio" name="score_updata" value="first">
+                                <input id="score_updata_1" type="number" oninput="if(value.length>3)value=value.slice(0,3)">
+                            </td>
+                            <td>
+                                <input type="radio" name="score_updata" value="second">
+                                <input id="score_updata_2" type="number" oninput="if(value.length>3)value=value.slice(0,3)">
+                            </td>
+                            <td>
+                                <input type="radio" name="score_updata" value="third">
+                                <input id="score_updata_3" type="number" oninput="if(value.length>3)value=value.slice(0,3)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <div id="show_windows_1">
+            <table border="1" cellpadding="0" cellspacing="0" class="show_score_table">
+                <tr>
+                    <td class="table_show_score_1">序号</td>
+                    <td class="table_show_score_2">姓名</td>
+                    <td class="table_show_score_3">账号</td>
+                    <td class="table_show_score_4">试题种类</td>
+                    <td class="table_show_score_5">第一次</td>
+                    <td class="table_show_score_6">第二次</td>
+                    <td class="table_show_score_7">第三次</td>
+                    <td class="table_show_score_8">最高分</td>
+                    <td class="table_show_score_9">最低分</td>
+                </tr>
+            </table>
+        </div>
+        <div id="show_windows_2">
+            <table border="1" cellpadding="0" cellspacing="0" class="show_score_table">
+                <tfoot></tfoot>
+                <tbody id="show_score_2"></tbody>
+            </table>
+        </div>
+
+
+
+        <div id="end">
+            友情链接:
+            <a href="http://www.cgfse.com">成都晨光博达橡塑有限公司</a>
+            <a href="http://www.aifsil.com">成都博达爱福科技有限公司</a>
+            <h4>&copy版权归成都晨光博达橡塑有限公司所有</h4>
+        </div>
+    </body>
+</html>

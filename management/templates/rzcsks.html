@@ -1,0 +1,213 @@
+{% load static %}
+<!doctype html>
+<html lang='zh-cmn-Hans'>
+    <head>
+{#    禁用缓存加载#}
+        <meta name="author" content="chengmo">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" CONTENT="no-cache">
+{#        <meta http-equiv="expires" content="0">#}
+        <meta charset='UTF-8'>
+        <title>
+            博达OA系统
+        </title>
+        <script src='{% static 'jquery/jquery-1.11.3.js' %}'></script>
+        <script src="{% static 'javascript/test.js' %}"></script>
+        <script src="{% static 'javascript/gongsi.js' %}"></script>
+        <script>
+            var stop = false;
+            {#倒计时#}
+            $(function () {
+                var timesrun = 111;
+                var interval = setInterval(function(){
+                    if(stop){
+                        clearInterval(interval);
+                    }else if(timesrun == 0 ){
+                        $('#test_button_1').click();
+                        clearInterval(interval);
+                    }
+                    //do whatever here..
+                    var h = timesrun/60/60%24;
+                    var m = timesrun/60%60;
+                    var s = timesrun%60;
+                    document.getElementById('time_1').innerText='距离考试结束还有:'+Math.trunc(h)+':'+Math.trunc(m)+':'+s;
+                    timesrun--
+                    }, 1000);
+            });
+
+            $(document).bind("keydown", function(e) {//文档绑定键盘按下事件
+                e = window.event || e;//解决浏览器兼容的问题
+                if(e.keyCode == 116) {//F5按下
+                　　e.keyCode = 0;
+                　　return false;
+                }else{
+                　　//让其刷新
+                }
+            });
+            $(function () {
+                var subject1 = {{ subject|safe }};
+                var answer1 = {{ answer|safe }};
+                {#生成4道题#}
+                for (var n=0; n<44; n++){
+                    if (n<10){
+                        var $subject = $('<div id='+'subject'+n+'>'+(n+1)+'. '+subject1[0][n]+'</div>');
+
+                        var $option = $('<input type=radio value=A name=option'+n+'>A:'+subject1[1][n][0]+
+                                        '<br><input type=radio value=B name=option'+n+'>B:'+subject1[1][n][1]+
+                                        '<br><input type=radio value=C name=option'+n+'>C:'+subject1[1][n][2]+
+                                        '<br><input type=radio value=D name=option'+n+'>D:'+subject1[1][n][3]+'<br>');
+                        var $answer = $('<span style=display:none id='+'answer'+n+'>本题答案:'+answer1[n]+'</span>');
+                        $('#select_one').append($subject);
+                        $('#select_one').append($option);
+                        $('#select_one').append($answer);
+                    } else if (n<20){
+                        var $subject = $('<div id='+'subject'+n+'>'+(n+1)+'. '+subject1[0][n]+'</div>');
+
+                        var $option = $('<input type=checkbox value=A name=option'+n+'>A:'+subject1[1][n][0]+
+                                        '<br><input type=checkbox value=B name=option'+n+'>B:'+subject1[1][n][1]+
+                                        '<br><input type=checkbox value=C name=option'+n+'>C:'+subject1[1][n][2]+
+                                        '<br><input type=checkbox value=D name=option'+n+'>D:'+subject1[1][n][3]+'<br>');
+                        var $answer = $('<span style=display:none id='+'answer'+n+'>本题答案:'+answer1[n]+'</span>');
+                        $('#select_more').append($subject);
+                        $('#select_more').append($option);
+                        $('#select_more').append($answer);
+                    }else if (n<30){
+                        var $subject = $('<div id='+'subject'+n+'>'+(n+1)+'. '+subject1[0][n]+'</div>');
+
+                        var $option = $('<input type=radio value=A name=option'+n+'>A:正确'+
+                                        '<br><input type=radio value=B name=option'+n+'>B:错误'+'<br>');
+                        var $answer = $('<span style=display:none id='+'answer'+n+'>本题答案:'+answer1[n]+'</span>');
+                        $('#judge').append($subject);
+                        $('#judge').append($option);
+                        $('#judge').append($answer);
+                    }else if (n<40){
+                        var $subject = $('<div id='+'subject'+n+'>'+(n+1)+'. '+subject1[0][n]+'</div><br>');
+                        var $textarea_value = $('<div name=textarea><textarea style=width:500px></textarea></div><br>');
+                        var $answer = $('<div style=display:none id='+'answer'+n+'>本题答案:'+answer1[n]+'</div><br>');
+                        $('#completion').append($subject);
+                        $('#completion').append($textarea_value);
+                        $('#completion').append($answer);
+                    }else if (n<44){
+                        var $subject = $('<div id='+'subject'+n+'>'+(n+1)+'. '+subject1[0][n]+'</div><br>');
+                        var $textarea_value = $('<div name=textarea><textarea style=width:500px></textarea></div><br>');
+                        var $answer = $('<div style=display:none id='+'answer'+n+'>本题答案:'+answer1[n]+'</div><br>');
+                        $('#short_answer').append($subject);
+                        $('#short_answer').append($textarea_value);
+                        $('#short_answer').append($answer);
+                    }
+                }
+                {#保存分数#}
+                function save_score(object,score){
+                    $.ajax({
+                    url : '/management/save_score/',
+                    data : {'datas' : JSON.stringify([object,score])},
+                    type : 'get',
+                    dataType : 'json',
+                    async :'true',
+                    success : function (data, status, xhr) {
+                        alert(data.msg);
+                    },
+                    error : function (xhr, status, error) {
+                        alert('服务器通讯异常');
+                    }
+                });}
+
+                {#判断答案#}
+                $('#test_button_1').click(
+                    function (e) {
+                        var score = 0;
+                        var textarea = document.getElementsByName('textarea');
+                        for (var x=0;x<textarea.length;x++) {
+                            var textvalue = textarea[x].children[0].value;
+                            var app = document.createElement('div');
+                            app.innerText = '您的答题:'+textvalue;
+                            textarea[x].removeChild(textarea[x].children[0]);
+                            textarea[x].append(app);
+                        }
+                        {#生成44题答案#}
+                        for(var i=0;i<44;i++){
+                            $('#answer'+i).show();
+                            {#前30题变色#}
+                            if(i<30){
+                                var value = $("input[name="+"option"+i+"]:checked").map(function(index,elem){return $(elem).val();}).get().join('');
+                                if (value==answer1[i]){
+                                    $('#answer'+i).css({"background-color":"green"});
+                                    if(i<20){
+                                        {#前20题得2分#}
+                                        score += 2;
+                                    }else{
+                                        {#20题后得1分#}
+                                        score++;
+                                    }
+                                }else{
+                                    $('#answer'+i).css({"background-color":"red"});
+                                }
+                            }
+
+                        }
+                        $('#test_button_1').hide();
+                        $('#score_2').text(score);
+                        save_score('rzcsks',score);
+                        stop = true;
+                        e.preventDefault();
+                    }
+                )
+            });
+        </script>
+        <link rel="stylesheet" href="{% static 'css/management.css' %}">
+    </head>
+    <body id = 'body'>
+        <!--body中的title-->
+        <div id = 'title1'>
+            <img src='{% static 'images/logo_1.png' %}' class='title_img1'>
+            博达OA系统1.0
+            <img src='{% static 'images/logo_2.png' %}' class='title_img1'>
+        </div>
+        <div id="mt1">
+            <div>
+                <span id="rzaqks_title1">
+                    {{ ucompany }}:{{ udepartment1 }}
+                    <br>
+                    {{ udepartment2 }}:{{ upost }}:{{ uname }}
+                </span>
+            </div>
+            <span id="rzaqks_title2">入职测试</span>
+            <div>
+                <div>
+                    <span id="score_1">系统得分:</span>
+                    <span id="score_2">_XXX_</span>
+                </div>
+                <div id="score_4">
+                    <span id="score_3">人工得分:______</span>
+                </div>
+            </div>
+            <span id='time_1'>开始计时</span>
+        </div>
+        <div>
+            测试说明：
+            1、本测试用意为检验每位员工学习《员工手册》的实际效果。
+            2、本测试为开卷答题，答题时请认真、独立完成，90分及以上为合格，不合格需至总经办进行补考。
+            3、请于收到《员工手册》一周内完成测试，于交回总经办后，才算完成入职手续。
+        </div>
+        <form action="" method="post" id="rzaqks_from_1">
+            {% csrf_token %}
+            <p>第一题,单项选择题(每题2分,共计10题)</p>
+            <div id="select_one"></div>
+            <p>第二题,多项选择题(每题2分,共计10题)</p>
+            <div id="select_more"></div>
+            <p>第三题,判断题(每题1分,共计10题)</p>
+            <div id="judge"></div>
+            <p>第四题,填空题(每题1分,共计10题)</p>
+            <div id="completion"></div>
+            <p>第五题,简答题(每题10分,共计4题)</p>
+            <div id="short_answer"></div>
+            <button id="test_button_1">提交</button>
+        </form>
+        <div id="end">
+            友情链接:
+            <a href="http://www.cgfse.com">成都晨光博达橡塑有限公司</a>
+            <a href="http://www.aifsil.com">成都博达爱福科技有限公司</a>
+            <h4>&copy版权归成都晨光博达橡塑有限公司所有</h4>
+        </div>
+    </body>
+</html>

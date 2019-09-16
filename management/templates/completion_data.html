@@ -1,0 +1,117 @@
+{% load static %}
+<!doctype html>
+<html lang='zh-cmn-Hans'>
+    <head>
+{#    禁用缓存加载#}
+        <meta name="author" content="chengmo">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" CONTENT="no-cache">
+{#        <meta http-equiv="expires" content="0">#}
+        <meta charset='UTF-8'>
+        <title>
+            博达OA系统
+        </title>
+        <script src='{% static 'jquery/jquery-1.11.3.js' %}'></script>
+        <link rel="stylesheet" href="{% static 'css/management.css' %}">
+        <script src="{% static 'javascript/createdata.js' %}"></script>
+    </head>
+    <body id = 'body'>
+        <!--body中的title-->
+        <div id = 'title1'>
+            <img src='{% static 'images/logo_1.png' %}' class='title_img1'>
+            博达OA系统1.0
+            <img src='{% static 'images/logo_2.png' %}' class='title_img1'>
+        </div>
+        <div id="mt1">
+            <div>
+                <span>{{ ucompany }}:{{ udepartment1 }}
+                    <br>
+                    {{ udepartment2 }}:{{ upost }}:{{ uname }}
+                </span>
+            </div>
+            <a id="back" href="{% url 'back' %}">返回主页</a>
+            <a id="quit_1" href="{% url 'quit' %}">注销登录</a>
+        </div>
+        <div>
+            <div>填空题库</div>
+                <table id="table1" border="1" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td id="table2_1">序号</td>
+                        <td class="table3_2"  style="width: 630px;">题目</td>
+                        <td id="table2_7" style="width: 630px;">答案</td>
+                        <td id="table2_8">操作</td>
+                    </tr>
+                </table>
+                <div id="style1_1_1">
+                    <form>
+                    {% csrf_token %}
+                    <table id="table1" border="1" cellpadding="0" cellspacing="0">
+                        <tbody id="tbody2" >
+                            <script>
+                                $(function () {
+                                   var values = {{ mydict|safe }};
+                                   for (var n = 0;n<values.length;n++){
+                                       var $create1 =$('<tr >' +
+                                                       '<td id='+values[n]["id"]+' class="table2_1">'+(n+1)+'</td>'+
+                                                       '<td class="table4_1">'+values[n]["subject"]+'</td>'+
+                                                       '<td class="table4_1">'+values[n]["answer"]+'</td>'+
+                                                       '<td class="table2_8">' +
+                                                           '<div class="style2">' +
+                                                                '<button onclick="mydelete(this)" type="button">删除</button>'+
+                                                           '</div>'+
+                                                       '</td>'+
+                                                       '</tr>');
+                                                        $('#tbody2').prepend($create1);
+                                   }
+                                })
+                            </script>
+                        </tbody>
+                    </table>
+                </form>
+                </div>
+            </div>
+            <hr>
+            <div>填空题库增加</div>
+            <form>
+                {% csrf_token %}
+                <table id="table1" border="1" cellpadding="0" cellspacing="0">
+                    <thead >
+                        <tr>
+                            <td rowspan="2">序号</td>
+                            <td id="table1_1">判断题</td>
+                            <td>
+                                <input type="text" id="table1_2" style="width: 550px;">
+                            </td>
+                            <td>
+                                <input type="text" id="table1_3" style="width: 550px;">
+                            </td>
+                            <td style="width: 66px">
+                                <button onclick="short_answerzengjia()" type="button">增加</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>题目类型</td>
+                            <td>题目(限定300字)</td>
+                            <td>答案</td>
+                            <td>操作</td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <button onclick="submission2('4')"  type="button">提交</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                        <tbody id="tbody1"></tbody>
+                </table>
+            </form>
+
+        <div id="end">
+            友情链接:
+            <a href="http://www.cgfse.com">成都晨光博达橡塑有限公司</a>
+            <a href="http://www.aifsil.com">成都博达爱福科技有限公司</a>
+            <h4>&copy版权归成都晨光博达橡塑有限公司所有</h4>
+        </div>
+    </body>
+</html>

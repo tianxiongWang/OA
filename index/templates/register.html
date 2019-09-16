@@ -1,0 +1,122 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    OA账号注册
+{% endblock %}
+
+{% block login1 %}
+    博达用户注册
+{% endblock %}
+
+{% block register1 %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css">
+    <script src="{% static 'javascript/register.js' %}"></script>
+{% endblock %}
+
+{% block login2 %}
+    <form id="form_2" method="post" action="/register/">
+        {% csrf_token %}
+        <div>
+            <p class="form_2_p">手机号:</p>
+            <input type="text" placeholder="请输手机号" id="register_input_1" name="uphone">
+            <span id="register_span_1">{{ errMsg }}</span>
+        </div>
+        <div>
+            <p class="form_2_p">密&nbsp&nbsp&nbsp&nbsp码:</p>
+            <input type="password" placeholder="请输8位以上密码" id="register_input_2">
+            <span id="register_span_2">*以首字母开始,必须包含大小写字母,数字,'_'四种中的任意三种,组合的8-20位密码</span>
+        </div>
+        <div>
+            <p class="form_2_p">确认密码:</p>
+            <input type="password" id="register_input_3" name="upassword">
+            <span id="register_span_3"></span>
+        </div>
+        <div>
+            <p class="form_2_p">姓名:</p>
+            <input type="text" id="register_input_7" name="uname">
+            <span id="register_span_7"></span>
+        </div>
+        <div>
+            <p class="form_2_p">身份证号:</p>
+            <input type="text" class ='Id_Verification' id="register_input_4" name="unameid">
+            <span id="register_span_4"></span>
+        </div>
+        <div id="select_company">
+            <p class="form_2_p" id="select_company_1">就职公司:</p>
+            <select name="ucompany" id="register_input_8">
+                <script>
+                    $(function () {
+                        var long = {{ ucompany|safe }};
+                        var count = 1;
+                        for (var key in long){
+                            $('#register_input_8').append('<option value='+count+'>'+long[key]+'</option>');
+                            count++
+                        }
+                    })
+                </script>
+            </select>
+        </div>
+
+        <div>
+            <p class="form_2_p">部门:</p>
+            <div>
+                <select  name="udepartment1" id="register_input_8_1" onChange="move()"><!-- 根据id获取value，onchange（）触发函数move（）修改二级select的text值实现联动 -->
+                    <!--默认一级部门-->
+                    <script>
+                    $(function () {
+                        var long = {{ udepartment1|safe }};
+                        var count = 1;
+                        for (var key in long){
+                            $('#register_input_8_1').append('<option value='+count+'>'+long[key]+'</option>');
+                            count++
+                        }
+                    })
+                    </script>
+                </select>
+                <select id="register_input_8_2" name="udepartment2"></select>
+                <!--默认二级部门-->
+                <script>
+                $(function () {
+                    $('#register_input_8_2').append('<option value=0>--空--</option>');
+                });
+                function move() {
+                    var s1=document.getElementById("register_input_8_1");
+                    var s2=document.getElementById("register_input_8_2"); <!-- 获取一级和二级的属性-->
+                    var add;
+                    var long = {{ udepartment2|safe }};
+                    if(s1.value=="5") {
+                        add=long['5']; <!--比对value值，实现对应二级text值的动态生成-->
+                    }else if(
+                        s1.value=="6") {
+                        add=long['6'];<!--比对value值，实现对应二级text值的动态生成-->
+                    }else if(s1.value=="7") {
+                        add=long['7']; <!--比对value值，实现对应二级text值的动态生成-->
+                    }else {
+                        add=new Array("--空--",); <!--若没有就为空，当然不可能出现的-->
+                        $('#register_input_8_2').append('<option value=0 def>--空--</option>');
+                    }
+                    s2.length=0;
+                    for(var i=0; i<add.length;i++) {
+                        $('#register_input_8_2').append('<option value='+(i+1)+'>'+(add[i].split()[0])+'</option>');
+                    }}
+                </script>
+            </div>
+        </div>
+        <div>
+            <p class="form_2_p">岗位:</p>
+            <input type="text" id="register_input_9" name="upost">
+            <span id="register_span_9"></span>
+        </div>
+        <div>
+            <p class="form_2_p">验证码:</p>
+            <input type="text" id="register_input_5">
+            <span id="register_span_5"></span>
+            <button id="register_button_1" >刷新</button>
+        </div>
+        <span id="register_span_6"></span>
+        <div id="register_button_2">
+            <button>注册</button>
+        </div>
+    </form>
+{% endblock %}
